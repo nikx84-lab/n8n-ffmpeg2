@@ -14,6 +14,8 @@ ENV N8N_RESTRICT_FILE_ACCESS_TO=/tmp/n8n
 ENV N8N_DEFAULT_BINARY_DATA_MODE=filesystem
 # Code-нода в task runner: держим 5 минут (в будущих версиях по умолчанию станет 1 минута)
 ENV N8N_RUNNERS_TASK_TIMEOUT=300
+# Community-ноды не используем (аудит 25.10: только n8n-nodes-base и langchain) — установку и загрузку выключаем
+ENV N8N_COMMUNITY_PACKAGES_ENABLED=false
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=90s --retries=3 \
   CMD wget -qO /dev/null http://localhost:5678/healthz || exit 1
