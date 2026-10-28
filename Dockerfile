@@ -1,4 +1,4 @@
-FROM n8nio/n8n:2.44.6
+FROM n8nio/n8n:2.45.5
 
 USER root
 
@@ -16,6 +16,9 @@ ENV N8N_DEFAULT_BINARY_DATA_MODE=filesystem
 ENV N8N_RUNNERS_TASK_TIMEOUT=300
 # Community-ноды не используем (аудит 25.10: только n8n-nodes-base и langchain) — установку и загрузку выключаем
 ENV N8N_COMMUNITY_PACKAGES_ENABLED=false
+# n8n Assistant выключен в Settings 25.10 (у нас свои агенты) — модуль не загружаем совсем (docs: set-up-n8n-assistant).
+# mcp и agents НЕ выгружать: встроенный MCP нужен для проверочных запусков (n8n_test_workflow method=direct)
+ENV N8N_DISABLED_MODULES=instance-ai
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=90s --retries=3 \
   CMD wget -qO /dev/null http://localhost:5678/healthz || exit 1
