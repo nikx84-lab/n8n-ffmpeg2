@@ -5,6 +5,10 @@ USER root
 COPY --from=mwader/static-ffmpeg:6.0 /ffmpeg /usr/local/bin/
 COPY --from=mwader/static-ffmpeg:6.0 /ffprobe /usr/local/bin/
 
+# Рабочая папка файловых нод (N8N_RESTRICT_FILE_ACCESS_TO): образ n8n её не создаёт, после пересборки её не было
+# (29.10.2026, Video Creator 272784 — «The file or directory does not exist»)
+RUN mkdir -p /tmp/n8n && chown node:node /tmp/n8n
+
 ENV NODES_EXCLUDE=[]
 ENV N8N_HOST=0.0.0.0
 ENV N8N_PORT=5678
